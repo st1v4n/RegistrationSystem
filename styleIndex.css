@@ -1,0 +1,66 @@
+body{
+    background: linear-gradient(3deg, cyan, blue, darkblue);
+}
+
+.mainPage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 500px;
+    max-height: 1000px;
+    width:100%;
+    background: white;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.mainPage header{
+    font-size: 32px;
+    font-style: oblique;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    margin-top: 10px;
+}
+
+.mainPage p{
+    font-size: 24px;
+    text-align: center;
+    color: black;
+    margin-top: 10px;
+}
+
+.mainPage input.registerButton{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    height: 50px;
+    width: 150px;
+    margin-left: 175px;
+    color:white;
+    background: blue;
+    font-size:16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.mainPage input.registerButton:hover{
+    background-color: rgb(0, 195, 255);
+    box-shadow: 0 0 10px black;
+}
+
+.mainPage input.loginButton{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    height: 50px;
+    width: 150px;
+    margin-left: 175px;
+    color:white;
+    background: blue;
+    font-size:16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.mainPage input.loginButton:hover{
+    background-color: rgb(0, 195, 255);
+    box-shadow: 0 0 10px black;
+}
