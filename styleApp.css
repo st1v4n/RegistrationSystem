@@ -1,7 +1,7 @@
 body {
     background: linear-gradient(3deg, cyan, blue, darkblue);
 }
-.RegistrationForm {
+.app {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -14,44 +14,28 @@ body {
     border-radius: 10px;
 }
 
-.RegistrationForm header{
+.app header{
     padding: 10px;
     text-align: center;
-    font-size: 24px;
+    font-size: 32px;
     font-style:oblique;
     font-weight: bold;
     color: blue;
-    margin-bottom:20px;
 }
 
-.RegistrationForm input{
-    height: 20px;
-    width: 490px;
-    font-size: 16px;
-    margin-top: 4px;
-    margin-bottom:20px;
-    border: 2px thick;
-    border-radius: 5px;
-    padding-left:5px;
-}
-
-.RegistrationForm h{
+.app h{
     font-weight: bold;
-    margin-left:5px;
+    margin-left:50px;
     color:blue;
     font-size:16px;
     font-family:Arial, Helvetica, sans-serif;
 }
 
-.RegistrationForm input:focus{
-    border-radius: 10px;
-}
-
-.RegistrationForm input.button{
+.app input.button{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     height: 50px;
     width: 150px;
-    margin-left: 175px;
+    margin-left: 100px;
     color:white;
     background: blue;
     font-size:16px;
@@ -59,13 +43,24 @@ body {
     cursor: pointer;
 }
 
-.RegistrationForm input.button:hover{
+.app input.buttonLogout{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    height: 50px;
+    width: 150px;
+    margin-left: 196px;
+    color:white;
+    background: blue;
+    font-size:16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.app input.button:hover{
     background-color: rgb(0, 195, 255);
     box-shadow: 0 0 10px black;
 }
 
-.RegistrationForm p.errorMessage{
-    font-size: 16px;
-    color:red;
-    margin: 10px;
+.app input.buttonLogout:hover{
+    background-color: rgb(0, 195, 255);
+    box-shadow: 0 0 10px black;
 }

@@ -11,15 +11,76 @@
         <header>New here? Create your own account!</header>
             <form action="#">
                 <h>First Name</h>
-                <input type="text" class="firstName" placeholder="Enter your first name...">
+                <input type="text" id="firstNameId" class="firstName" placeholder="Enter your first name...">
                 <h>Last Name</h>
-                <input type="text" class="lastName" placeholder="Enter your last name...">
+                <input type="text" id="lastNameId" class="lastName" placeholder="Enter your last name...">
                 <h>Email</h>
-                <input type="text" class="emailText" placeholder="Enter your email...">
+                <input type="text" id="emailTextId" class="emailText" placeholder="Enter your email...">
                 <h>Password</h>
-                <input type="password" class = "loginText" placeholder="Enter your password...">
-                <p>Complete the captcha to verify that you are a human!</p>
-                <input type="button" class="button" value="Register" onclick="window.location.href='LoginPage.html'">
+                <input type="password" id="passwordTextId" class = "passwordText" placeholder="Enter your password...">
+                <p class="captchaText">Complete the captcha to verify that you are a human! 73 - 37:</p>
+                <input type="text" id="captchaId" class="captcha" placeholder="Enter the correct value...">
+                <input type="button" id="ButtonRegisterId" class="button" value="Register" onclick="sendToServer()">
+                <p id="errorMessageId" class="errorMessage"></p>
+
+                <script>
+                    function sendToServer() {
+                        var firstName, lastName, email, password, captcha;
+                        firstName = document.getElementById('firstNameId').value;
+                        lastName = document.getElementById('lastNameId').value;
+                        email = document.getElementById('emailTextId').value;
+                        password = document.getElementById('passwordTextId').value;
+                        captcha = document.getElementById('captchaId').value;
+                        if(captcha != '36'){
+                            console.log("Captcha not correct!!!");
+                            window.location.href="RegistrationPage.html"
+                        }
+                        dataToSend = {
+                            firstNameText: firstName,
+                            lastNameText: lastName,
+                            emailText: email,
+                            passwordText: password
+                        };
+                        fetch('/RegistrationPage.html', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(dataToSend)
+                        })
+                        .then(response => {
+                            if(response.status == 200){
+                                window.location.href="LoginPage.html"
+                                console.log('ok!');
+                            }
+                            else if(response.status == 300){
+                                console.log('incorrect info!')
+                                return response.json();
+                            }
+                            else if(response.status == 404){
+                                console.log('destination unreachable!');
+                            }
+                        })
+                        .then(incoming_data => {
+                            console.log(incoming_data)
+                            var errorOutput = document.getElementById('errorMessageId');
+                            var messageToOutput = "";
+                            if(incoming_data.Email != undefined){
+                                messageToOutput += incoming_data.Email + '\n';
+                            }
+                            if(incoming_data.Password != undefined){
+                                messageToOutput += incoming_data.Password + '\n';
+                            }
+                            if(incoming_data.FirstName != undefined){
+                                messageToOutput += incoming_data.FirstName + '\n';
+                            }
+                            if(incoming_data.LastName != undefined){
+                                messageToOutput += incoming_data.LastName + '\n';
+                            }
+                            errorOutput.innerText = messageToOutput;
+                        })
+                    }
+                </script>
             </form>
     </div>
 </body>
