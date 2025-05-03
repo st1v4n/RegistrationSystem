@@ -1,0 +1,71 @@
+body {
+    background: linear-gradient(3deg, cyan, blue, darkblue);
+}
+.changeLastName {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 500px;
+    max-height: 1000px;
+    width:100%;
+    background: white;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.changeLastName header{
+    padding: 10px;
+    text-align: center;
+    font-size: 32px;
+    font-style:oblique;
+    font-weight: bold;
+    color: blue;
+    margin-bottom: 20px;
+}
+
+.changeLastName input{
+    height: 20px;
+    width: 490px;
+    font-size: 16px;
+    margin-top: 4px;
+    margin-bottom: 20px;
+    border: 2px thick;
+    border-radius: 5px;
+    padding-left:5px;
+}
+
+.changeLastName h{
+    font-weight: bold;
+    margin-left:5px;
+    color:blue;
+    font-size:16px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.changeLastName input:focus{
+    border-radius: 10px;
+}
+
+.changeLastName input.button{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    height: 50px;
+    width: 150px;
+    margin-left: 170px;
+    color:white;
+    background: blue;
+    font-size:16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.changeLastName input.button:hover{
+    background-color: rgb(0, 195, 255);
+    box-shadow: 0 0 10px black;
+}
+
+.changeLastName p.errorMessage{
+    font-size: 16px;
+    color:red;
+    margin: 10px;
+}

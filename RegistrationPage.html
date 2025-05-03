@@ -50,12 +50,18 @@
                         })
                         .then(response => {
                             if(response.status == 200){
-                                window.location.href="LoginPage.html"
+                                localStorage.setItem("email", email);
+                                window.location.href="app.html"
                                 console.log('ok!');
                             }
                             else if(response.status == 300){
                                 console.log('incorrect info!')
                                 return response.json();
+                            }
+                            else if(response.status == 314){
+                                var errorOutput = document.getElementById('errorMessageId');
+                                var messageToOutput = "User already registered!";
+                                errorOutput.innerText = messageToOutput;
                             }
                             else if(response.status == 404){
                                 console.log('destination unreachable!');

@@ -31,17 +31,50 @@ class Server(BaseHTTPRequestHandler):
         if self.path == '/RegistrationPage.html':
             data = self._load_data()
             validation_results = validation.validate_registration(data)
-            if(validation_results[0] == False):
+            if validation_results[0] == False:
                 self.send_response(300)
                 output = json.dumps(validation_results[1])
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length" , str(len(output)))
                 self.end_headers()
                 self.wfile.write(output.encode('utf-8'))
-            if(validation_results[0] == True):
-                databaseHandle.insert_new_user(data)
+            else:
+                if databaseHandle.check_already_registered(data['emailText']):
+                    self.send_response(314)
+                    self.end_headers()
+                else:
+                    databaseHandle.insert_new_user(data)
+                    self.send_response(200)
+                    self.end_headers()
+        elif self.path == '/changeFirstName.html':
+            data = self._load_data()
+            validation_results = validation.validate_name(data['firstNameText'])
+            if validation_results == True:
+                databaseHandle.update_value_by_email("FirstName", data['firstNameText'] , data['emailText'])
                 self.send_response(200)
                 self.end_headers()
+            else:
+                self.send_response(300)
+                output = json.dumps({'FirstName' : "Name: Invalid!"})
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length" , str(len(output)))
+                self.end_headers()
+                self.wfile.write(output.encode('utf-8'))
+        elif self.path == '/changeLastName.html':
+            data = self._load_data()
+            validation_results = validation.validate_name(data['lastNameText'])
+            if validation_results == True:
+                databaseHandle.update_value_by_email("lastName", data['lastNameText'] , data['emailText'])
+                self.send_response(200)
+                self.end_headers()
+            else:
+                self.send_response(300)
+                output = json.dumps({'LastName' : "Name: Invalid!"})
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length" , str(len(output)))
+                self.end_headers()
+                self.wfile.write(output.encode('utf-8'))
+
             
 server = HTTPServer((Server.host, Server.port), Server)
 server.serve_forever()

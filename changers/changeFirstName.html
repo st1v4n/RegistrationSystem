@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleFirstName.css">
+    <title>ChangeFirstName</title>
+</head>
+<body>
+    <div class="changeFirstName">
+        <header>Change your First Name!</header>
+            <form action="#">
+                <h>New name</h>
+                <input type="text" id="firstNameId" class="firstNameText" placeholder="Enter your first name...">
+                <input type="button" class="button" value="Save" onclick="sendToServer()">
+                <p id="errorMessageId" class="errorMessage"></p>
+                <script>
+                    function sendToServer(){
+                        var firstName, email;
+                        firstName = document.getElementById('firstNameId').value;
+                        email = localStorage.getItem('email');
+                        dataToSend = {
+                            firstNameText: firstName,
+                            emailText: email
+                        };
+                        fetch('/changeFirstName.html', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(dataToSend)
+                        })
+                        .then(response => {
+                            if(response.status == 200){
+                                console.log('ok!');
+                                window.location.href='../app.html'
+                            }
+                            else if(response.status == 300){
+                                console.log('incorrect info!')
+                                return response.json();
+                            }
+                            else if(response.status == 404){
+                                console.log('destination unreachable!');
+                            }
+                        })
+                        .then(incoming_data => {
+                            console.log(incoming_data)
+                            var errorOutput = document.getElementById('errorMessageId');
+                            var messageToOutput = "";
+                            if(incoming_data.FirstName != undefined){
+                                messageToOutput += incoming_data.FirstName + '\n';
+                            }
+                            errorOutput.innerText = messageToOutput;
+                        })
+                    }
+                </script>
+            </form>
+    </div>    
+</body>
+</html>

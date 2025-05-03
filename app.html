@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styleApp.css">
-    <title>Login</title>
+    <title>App</title>
 </head>
 <body>
     <div class="app">
         <header>What do you want to do?</header>
             <form action="#">
-                <h>Change Information</h>
-                <input type="button" class="button" value="Change Info" onclick="">
+                <p id="emailHolderId">Ivan</p>
+                <h>Change First Name</h>
+                <input type="button" class="buttonFirstName" value="Change First Name" onclick="window.location.href='changers/changeFirstName.html'">
+                <h>Change Last Name</h>
+                <input type="button" class="buttonLastName" value="Change Last Name" onclick="window.location.href='changers/changeLastName.html'">
                 <h>Logout</h>
                 <input type="button" class="buttonLogout" value="Logout" onclick="window.location.href='index.html'">
+                <script>
+                    function setEmail(){
+                        var emailField = document.getElementById('emailHolderId');
+                        var outputMessage = "You are logged in as: " + localStorage.getItem('email');
+                        emailField.innerText = outputMessage;
+                    }
+                    window.onload = setEmail;
+                </script>
             </form>
     </div>    
 </body>
