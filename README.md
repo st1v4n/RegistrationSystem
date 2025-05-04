@@ -2,17 +2,26 @@
 A simple web application for registrations
 
 Описание на проекта:
+
 *За да може да работи проекта, трябва да имате MySQL база от данни на име Form, в която да има таблица на име FormTable с колони, озаглавени FirstName, LastName, Email, Password
+
 *За да тръгне проекта, трябва да стартирате файла server.py, да отворите browser и да напишете http://localhost:8080/ 
 
+
 *1. Използвани технологии
+
 front-end: html / css / javascript
+
 back-end: python > използвани библиотеки(модули): http.server / json / re / unittest / mysql.connector
+
 database: MySQL
+
 version control: git
 
+
 *2. Функционалности и страници
-ВСИЧКИ от изискваните
+ВСИЧКИ от изискваните във условието
+
 - Валидация - чрез множество функции във файла validation.py, които приемат входна информация от сървъра във вид на string и я проверяват.
 Сървърът от своя страна я получава като POST request от javascript fetch
 - Записване на данните в релационна база от данни MySQL - чрез mysql.connector, предоставящ връзка с базата от данни, като логиката се намира във файла databaseHandle.py,
@@ -31,38 +40,71 @@ version control: git
 
 *3. Използвани готови функции
 (Предполагам имате в предвид функции, които са част от някой външен модул, който съм използвал)
+
 Всичките са във python:
+
 От mysql.connector: cursor(), execute(), connect(), close(), commit(), fetchall(), 
+
 От json: loads(), dumps()
+
 От http.server: send_response(), end_headers(), wfile.write(), rfile.read(), send_header(), serve_forever()
+
 От re: match()
 
+
 *4. Файлове
+
 validation.py: В него се намират всички видове валидации на входни данни (имена, пароли)
+
 tests.py: unit тестове
+
 styleRegistration.css: stylesheet за файла RegistrationPage.html
+
 styleLogin.css: stylesheet за файла LoginPage.html
+
 styleIndex.css: stylesheet за файла index.html (Main page-a)
+
 server.py: сървъра, който получава и обработва заявки, и съответно връща някакви отговори
+
 RegistrationPage.html: страницата, която е формата за функционалността ,,регистрация''
+
 README.md: Описание на проекта(това, което четете сега)
+
 LoginPage.html: страницата, която е формата за функционалността ,,вписване''
+
 index.html: Main Страницата, към която се пренасочвате, когато посетите http://localhost:8080/
+
 databaseHandle.py: намират се всички функции за комуникация с базата от данни (запис, промяна и т.н)
+
 app.html: Страницата на самото приложение, съдържаща функционалностите по промяна на данни и Logout
+
 .gitignore: Кои файлове се игнорират при git commit
+
 changers/changeFirstName.html: страницата, предоставяща форма за промяна на името
+
 changers/changeLastName.html: страницата, предоставяща форма за промяна на фамилията
+
 changers/changePassword.html: страницата, предоставяща форма за промяна на паролата
+
 changers/styleFirstName.css: stylesheet за страницата changeFirstName.html
+
 changers/styleLastName.css: stylesheet за страницата changeLastName.html
+
 changers/stylePassword.css: stylesheet за страницата changePassword.html
 
+
 *Забележки:
+
 unit тестовете би трябвало да покриват 100% от кода на python във файловете validation.py и databaseHandleл.py, но не и всички функции, писани в рамките на системата (като например javascript функциите)
+
 Всички изисквания са спазени (може би без това за 100-те% при тестовете, но зависи от гледната точка)
+
 Архитектурния стил е клиент-сървър, като сървъра се намира на компютъра, който изпълни файла server.py и съответно клиента си е пак същия компютър, тъй като програмата се host-ва на localhost
+
 Приложението е предназначено да се използва локално, по посочения в началото начин
+
 Системата е разработена изцяло в интервала [02.05.25 - 04.05.25], като последната промяна, която ще бъде направена, е да запиша това описание във файла README.md
 
+
 Благодаря за вниманието!
+
