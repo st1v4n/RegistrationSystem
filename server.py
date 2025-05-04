@@ -8,7 +8,7 @@ class Server(BaseHTTPRequestHandler):
     host = 'localhost' # ще върви само на локален сървър (компютъра, който изпълнява server.py файла)
     port = 8080
     
-    def do_GET(self):
+    def do_GET(self): # за зареждане на html файлове
         if self.path == '/':
             self.path = '/index.html' # тъй като това е главната страница, искаме при достъп до сайта да ни препраща там
         try:
@@ -26,8 +26,26 @@ class Server(BaseHTTPRequestHandler):
         data = self.rfile.read(length) # прочита толкова байта от json-format данните, който сме изпратили
         data = json.loads(data)
         return data
+    
+    def _update_value_in_database(self, field, value, email):
+        validation_results = None
+        if field == "Password":
+            validation_results = validation.validate_password(value)
+        else:
+            validation_results = validation.validate_name(value)
+        if validation_results == True:
+            databaseHandle.update_value_by_email(field, value, email)
+            self.send_response(200)
+            self.end_headers()
+        else:
+            self.send_response(300)
+            output = json.dumps({field : "Invalid!"})
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length" , str(len(output)))
+            self.end_headers()
+            self.wfile.write(output.encode('utf-8'))
 
-    def do_POST(self):
+    def do_POST(self): # за пристигащи POST заявки от javascript-a
         if self.path == '/RegistrationPage.html':
             data = self._load_data()
             validation_results = validation.validate_registration(data)
@@ -48,28 +66,22 @@ class Server(BaseHTTPRequestHandler):
                     self.end_headers()
         elif self.path == '/changeFirstName.html':
             data = self._load_data()
-            validation_results = validation.validate_name(data['firstNameText'])
-            if validation_results == True:
-                databaseHandle.update_value_by_email("FirstName", data['firstNameText'] , data['emailText'])
-                self.send_response(200)
-                self.end_headers()
-            else:
-                self.send_response(300)
-                output = json.dumps({'FirstName' : "Name: Invalid!"})
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Length" , str(len(output)))
-                self.end_headers()
-                self.wfile.write(output.encode('utf-8'))
+            self._update_value_in_database("FirstName", data['firstNameText'], data['emailText'])
         elif self.path == '/changeLastName.html':
             data = self._load_data()
-            validation_results = validation.validate_name(data['lastNameText'])
-            if validation_results == True:
-                databaseHandle.update_value_by_email("lastName", data['lastNameText'] , data['emailText'])
+            self._update_value_in_database("LastName", data['lastNameText'], data['emailText'])
+        elif self.path == '/changePassword.html':
+            data = self._load_data()
+            self._update_value_in_database("Password", data['passwordText'], data['emailText'])
+        elif self.path == '/LoginPage.html':
+            data = self._load_data()
+            exists = databaseHandle.check_if_exists(data['emailText'], data['passwordText'])
+            if exists:
                 self.send_response(200)
                 self.end_headers()
             else:
                 self.send_response(300)
-                output = json.dumps({'LastName' : "Name: Invalid!"})
+                output = json.dumps({'LoginInfo' : "No such user!"})
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length" , str(len(output)))
                 self.end_headers()

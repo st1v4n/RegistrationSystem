@@ -5,7 +5,7 @@ email_error_message = "Email: Invalid!"
 password_error_message = "Password should contain at least 8 characters, 1 of them upper-case and 1 of them lower-case"
 
 def validate_email(email):
-    # всеки email трябва да match-ва regex-a от вида +@+\.+
+    # всеки email трябва да match-ва regex-a от вида <букви/цифри>@<букви/цифри>.<букви/цифри> Имейли от вида ivan.georgi@abv.bg ще считаме за невалидни заради . между ivan и georgi, нищо че всъщност са валидни в действителността
     if re.match(r'^\w+\@\w+\.\w+', email) is not None:
         return True
     return False
@@ -34,7 +34,7 @@ def validate_name(name):
             return False
     return True
 
-def validate_registration(data):
+def validate_registration(data): # Валидираме всички данни, нужни за регистрация, като ако има невалидни, добавяме като message, който после ще пратим обратно
     status = True # Ако всичко е минало успешно и това status остане на true, то ще върнем response 200
     message = dict()
     message['Email'] = ""

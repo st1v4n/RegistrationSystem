@@ -18,23 +18,43 @@
                 <input type="text" id="emailTextId" class="emailText" placeholder="Enter your email...">
                 <h>Password</h>
                 <input type="password" id="passwordTextId" class = "passwordText" placeholder="Enter your password...">
-                <p class="captchaText">Complete the captcha to verify that you are a human! 73 - 37:</p>
+                <p id="captchaTextId" class="captchaText"></p>
                 <input type="text" id="captchaId" class="captcha" placeholder="Enter the correct value...">
                 <input type="button" id="ButtonRegisterId" class="button" value="Register" onclick="sendToServer()">
                 <p id="errorMessageId" class="errorMessage"></p>
 
                 <script>
+                    var leftNumber, rightNumber;
+                    leftNumber = Math.floor(Math.random()*100);
+                    rightNumber = Math.floor(Math.random()*100);
+                    if(leftNumber < rightNumber){
+                        var temp = leftNumber;
+                        leftNumber = rightNumber;
+                        rightNumber = temp;
+                    }
+                    var expected = (leftNumber - rightNumber).toString();
+
+                    function showCaptcha(){
+                        var captchaTextField = document.getElementById('captchaTextId');
+                        var message = "Complete the captcha! " + leftNumber.toString() + " - " + rightNumber.toString() + " =";
+                        captchaTextField.innerText = message;
+                    }
+
+                    window.onload = showCaptcha;
+
                     function sendToServer() {
-                        var firstName, lastName, email, password, captcha;
+                        var captcha = document.getElementById('captchaId').value;
+                        if(captcha != expected){
+                            var errorOutput = document.getElementById('errorMessageId');
+                            var messageToOutput = "Captcha incorrect!";
+                            errorOutput.innerText = messageToOutput;
+                            return '';
+                        }
+                        var firstName, lastName, email, password;
                         firstName = document.getElementById('firstNameId').value;
                         lastName = document.getElementById('lastNameId').value;
                         email = document.getElementById('emailTextId').value;
                         password = document.getElementById('passwordTextId').value;
-                        captcha = document.getElementById('captchaId').value;
-                        if(captcha != '36'){
-                            console.log("Captcha not correct!!!");
-                            window.location.href="RegistrationPage.html"
-                        }
                         dataToSend = {
                             firstNameText: firstName,
                             lastNameText: lastName,
